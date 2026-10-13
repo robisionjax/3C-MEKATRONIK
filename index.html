@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misi Reka Bentuk Mekatronik - RBT Tingkatan 3</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                        display: ['Fredoka', 'cursive', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#2563eb',
+                            purple: '#7c3aed',
+                            yellow: '#f59e0b',
+                            green: '#10b981',
+                            pink: '#ec4899',
+                            bg: '#f0f9ff'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 50%, #fef3c7 100%);
+            min-height: 100vh;
+        }
+        .card-friendly {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border: 4px solid #ffffff;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+        }
+        .btn-friendly {
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .btn-friendly:hover:not(:disabled) {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.12);
+        }
+        .btn-friendly:active:not(:disabled) {
+            transform: translateY(2px) scale(0.98);
+        }
+        .bubble-glow {
+            animation: bounceSlow 3s infinite ease-in-out;
+        }
+        @keyframes bounceSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e0f2fe;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2563eb;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen text-slate-800 antialiased selection:bg-amber-300">
+
+    <!-- Header Navbar -->
+    <header class="w-full bg-white/90 backdrop-blur-md border-b-4 border-blue-500 sticky top-0 z-50 shadow-md">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-gradient-to-tr from-blue-500 to-indigo-600 text-white p-2.5 rounded-2xl shadow-md border-2 border-white bubble-glow">
+                    <i class="fa-solid fa-robot text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-display text-xl sm:text-2xl font-bold text-blue-600 leading-none">
+                        MISI REKA BENTUK MEKATRONIK 🤖
+                    </h1>
+                    <p class="text-xs sm:text-sm text-emerald-600 font-extrabold tracking-wide mt-0.5">RBT Tingkatan 3 – Tahap Sukar (KBAT)</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2">
+                <button id="bgmToggleBtn" onclick="toggleBGM()" class="flex items-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-700 px-3.5 py-2 rounded-2xl text-xs sm:text-sm font-extrabold transition-all border-2 border-blue-200">
+                    <i id="bgmIcon" class="fa-solid fa-music text-amber-500"></i>
+                    <span id="bgmStatus" class="hidden sm:inline">Muzik: ON</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow flex items-center justify-center p-3 sm:p-6">
+        <div class="w-full max-w-3xl">
+
+            <!-- 1. LANDING & REGISTRATION SCREEN -->
+            <section id="startScreen" class="card-friendly rounded-3xl p-6 sm:p-10 text-center relative overflow-hidden my-2 border-t-8 border-t-blue-500">
+                <div class="relative z-10">
+                    <span class="inline-block bg-blue-100 text-blue-800 border-2 border-blue-300 font-black text-xs uppercase tracking-wider px-4 py-2 rounded-full mb-3 shadow-sm bubble-glow">
+                        ⭐ Cabaran Interaktif RBT Tingkatan 3 ⭐
+                    </span>
+                    
+                    <h2 class="font-display text-3xl sm:text-5xl font-black text-slate-800 mb-3 leading-tight">
+                        Aplikasi & Analisis <span class="text-blue-600">Reka Bentuk Mekatronik!</span> ⚙️💡
+                    </h2>
+                    
+                    <p class="text-slate-600 font-bold text-sm sm:text-base mb-6 max-w-xl mx-auto leading-relaxed">
+                        Uji kefahaman anda dengan <span class="text-amber-600 font-extrabold">20 Soalan Objektif KBAT</span> serta manfaatkan <span class="text-purple-600 font-extrabold">Kad Booster Power-Up</span>!
+                    </p>
+
+                    <!-- Student Registration Form -->
+                    <div class="bg-blue-50/70 p-5 rounded-3xl max-w-md mx-auto mb-6 border-2 border-blue-200 text-left shadow-inner">
+                        <label class="block text-xs font-black text-blue-800 uppercase mb-1">Nama Anda / Murid <span class="text-rose-500">*</span></label>
+                        <div class="relative mb-3">
+                            <i class="fa-solid fa-user-circle absolute left-3.5 top-3.5 text-blue-400 text-lg"></i>
+                            <input type="text" id="playerName" placeholder="Contoh: Muhammad Danish" class="w-full bg-white border-2 border-blue-200 rounded-2xl py-3 pl-10 pr-3 text-sm font-bold text-slate-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all">
+                        </div>
+
+                        <label class="block text-xs font-black text-blue-800 uppercase mb-1">Kelas <span class="text-rose-500">*</span></label>
+                        <div class="relative mb-4">
+                            <i class="fa-solid fa-school absolute left-3.5 top-3.5 text-blue-400 text-lg"></i>
+                            <input type="text" id="playerClass" placeholder="Contoh: 3 Cerdas" class="w-full bg-white border-2 border-blue-200 rounded-2xl py-3 pl-10 pr-3 text-sm font-bold text-slate-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all">
+                        </div>
+
+                        <label class="block text-xs font-black text-amber-800 uppercase mb-1">Pilih Set Soalan:</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-layer-group absolute left-3.5 top-3.5 text-amber-500 text-lg"></i>
+                            <select id="subtopicFilter" class="w-full bg-white border-2 border-amber-200 rounded-2xl py-3 pl-10 pr-3 text-sm font-extrabold text-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all appearance-none cursor-pointer">
+                                <option value="ALL">🌟 Semua Soalan Kuiz (20 Soalan)</option>
+                                <option value="Bahagian A: Soalan 1-10">📌 Bahagian 1 (Soalan 1 - 10)</option>
+                                <option value="Bahagian B: Soalan 11-20">📌 Bahagian 2 (Soalan 11 - 20)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row justify-center gap-3">
+                        <button onclick="startQuiz()" class="btn-friendly bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-display text-lg sm:text-xl font-bold px-8 py-3.5 rounded-2xl shadow-lg border-2 border-emerald-300 inline-flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-play-circle text-2xl"></i>
+                            <span>MULA CABARAN!</span>
+                        </button>
+                        <button onclick="toggleLeaderboardModal(true)" class="btn-friendly bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-slate-900 font-display text-lg sm:text-xl font-bold px-6 py-3.5 rounded-2xl shadow-lg border-2 border-amber-200 inline-flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-trophy text-slate-900"></i>
+                            <span>Papan Ranking</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. QUIZ SCREEN -->
+            <section id="quizScreen" class="hidden card-friendly rounded-3xl p-5 sm:p-8 relative my-2 border-t-8 border-t-blue-500">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mb-4 pb-3 border-b-2 border-slate-100">
+                    <div class="flex items-center justify-between sm:justify-start gap-3">
+                        <span id="subtopicBadge" class="bg-blue-100 text-blue-800 border-2 border-blue-200 text-xs font-black px-3.5 py-1.5 rounded-xl uppercase tracking-wider">
+                            RBT Tingkatan 3
+                        </span>
+                        <div class="flex items-center gap-2 text-amber-800 text-xs sm:text-sm font-black bg-amber-100 px-3.5 py-1.5 rounded-xl border-2 border-amber-200">
+                            <i class="fa-solid fa-star text-amber-500 text-base"></i>
+                            <span>MARKAH: <span id="liveScore" class="text-base text-blue-700">0</span></span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2 text-xs font-extrabold text-slate-700 bg-slate-100 px-3.5 py-1.5 rounded-xl border border-slate-200">
+                        <i class="fa-solid fa-user-check text-emerald-600"></i>
+                        <span id="displayPlayerInfo">Pelajar: -</span>
+                    </div>
+                </div>
+
+                <!-- Booster Cards Panel -->
+                <div class="mb-4 bg-gradient-to-r from-purple-100 via-pink-100 to-amber-100 p-3 rounded-2xl border-2 border-purple-200 shadow-sm flex flex-wrap items-center justify-between gap-2">
+                    <span class="text-xs font-black text-purple-900 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-wand-magic-sparkles text-purple-600 text-sm"></i> Bantuan Booster:
+                    </span>
+                    <div class="flex items-center gap-2">
+                        <!-- Booster 1: 50/50 -->
+                        <button id="btn5050" onclick="useBooster5050()" class="btn-friendly bg-indigo-500 hover:bg-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-extrabold px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow border border-indigo-300">
+                            <i class="fa-solid fa-scissors text-amber-300"></i>
+                            <span>50:50 (<span id="count5050">2</span>)</span>
+                        </button>
+                        <!-- Booster 2: Hint -->
+                        <button id="btnHint" onclick="useBoosterHint()" class="btn-friendly bg-amber-500 hover:bg-amber-600 disabled:opacity-40 disabled:cursor-not-allowed text-slate-900 text-xs font-extrabold px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow border border-amber-300">
+                            <i class="fa-solid fa-lightbulb text-white"></i>
+                            <span>Hint (<span id="countHint">2</span>)</span>
+                        </button>
+                        <!-- Booster 3: Skip -->
+                        <button id="btnSkip" onclick="useBoosterSkip()" class="btn-friendly bg-teal-500 hover:bg-teal-600 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-extrabold px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow border border-teal-300">
+                            <i class="fa-solid fa-forward text-emerald-200"></i>
+                            <span>Skip (<span id="countSkip">1</span>)</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="flex justify-between text-xs text-slate-600 font-extrabold mb-1">
+                    <span id="queueCountInfo">Baki Soalan: 20</span>
+                    <span id="progressPercentText" class="text-blue-600">0%</span>
+                </div>
+                <div class="w-full bg-slate-100 h-3.5 rounded-full mb-5 overflow-hidden p-0.5 border border-slate-200">
+                    <div id="progressBar" class="bg-gradient-to-r from-blue-400 via-emerald-400 to-amber-400 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+
+                <!-- Question Area -->
+                <div class="mb-5">
+                    <div class="flex items-start gap-3">
+                        <span id="questionNum" class="bg-blue-600 text-white font-display text-base font-bold w-9 h-9 rounded-2xl flex items-center justify-center shrink-0 shadow-md">
+                            1
+                        </span>
+                        <h3 id="questionText" class="text-base sm:text-lg font-black text-slate-800 leading-snug pt-0.5">
+                            Memuatkan soalan...
+                        </h3>
+                    </div>
+                </div>
+
+                <!-- Options -->
+                <div id="optionsContainer" class="grid grid-cols-1 gap-2.5 mb-5"></div>
+
+                <!-- Hint Banner -->
+                <div id="hintBanner" class="hidden p-4 rounded-2xl mb-4 text-xs sm:text-sm font-bold bg-amber-100 text-amber-900 border-2 border-amber-300 flex items-start gap-2.5 shadow-sm">
+                    <i class="fa-solid fa-lightbulb text-amber-500 text-lg mt-0.5 shrink-0"></i>
+                    <div>
+                        <span class="font-extrabold uppercase">Petunjuk Analisis:</span> <span id="hintText" class="font-medium text-slate-800"></span>
+                    </div>
+                </div>
+
+                <!-- Feedback Banner -->
+                <div id="feedbackBanner" class="hidden p-4 rounded-2xl mb-4 text-sm font-bold flex items-start gap-3 border-2 shadow-sm">
+                    <i id="feedbackIcon" class="fa-solid text-2xl mt-0.5 shrink-0"></i>
+                    <div>
+                        <div id="feedbackTitle" class="font-black text-base"></div>
+                        <div id="feedbackText" class="mt-1 font-medium leading-relaxed"></div>
+                    </div>
+                </div>
+
+                <!-- Next Button -->
+                <div class="flex justify-end">
+                    <button id="nextBtn" onclick="nextQuestion()" class="hidden btn-friendly bg-blue-600 hover:bg-blue-700 text-white font-display font-bold text-base px-8 py-3 rounded-2xl shadow-md inline-flex items-center gap-2">
+                        <span>Soalan Seterusnya</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- 3. RESULT SCREEN -->
+            <section id="resultScreen" class="hidden card-friendly rounded-3xl p-6 sm:p-10 text-center relative my-2 border-t-8 border-t-amber-400">
+                <div class="mb-3 inline-block bg-amber-100 p-4 rounded-full text-amber-600 border-2 border-amber-300 shadow-sm bubble-glow">
+                    <i class="fa-solid fa-award text-5xl"></i>
+                </div>
+
+                <h2 class="font-display text-3xl sm:text-4xl font-black text-slate-800 mb-1">
+                    Syabas, <span id="resPlayerName" class="text-blue-600">Pelajar</span>! 🎉
+                </h2>
+                <p class="text-slate-600 font-bold text-sm sm:text-base mb-6">
+                    Anda telah berjaya menyelesaikan <span class="font-extrabold text-emerald-600">semua soalan mekatronik</span> dengan tepat!
+                </p>
+
+                <!-- Score Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-lg mx-auto mb-6">
+                    <div class="bg-emerald-50 p-4 rounded-2xl border-2 border-emerald-200">
+                        <div class="text-xs text-emerald-700 font-black uppercase">Markah Akhir</div>
+                        <div id="finalScore" class="font-display text-3xl font-black text-emerald-600 mt-0.5">200</div>
+                    </div>
+                    <div class="bg-amber-50 p-4 rounded-2xl border-2 border-amber-200">
+                        <div class="text-xs text-amber-700 font-black uppercase">Ketepatan Awal</div>
+                        <div id="accuracyPercent" class="font-display text-3xl font-black text-amber-600 mt-0.5">100%</div>
+                    </div>
+                    <div class="bg-indigo-50 p-4 rounded-2xl border-2 border-indigo-200 col-span-2 sm:col-span-1">
+                        <div class="text-xs text-indigo-700 font-black uppercase">Ulangan Salah</div>
+                        <div id="wrongAttemptsCount" class="font-display text-3xl font-black text-indigo-600 mt-0.5">0</div>
+                    </div>
+                </div>
+
+                <div id="motivationMsg" class="bg-slate-50 p-4 rounded-2xl border-2 border-slate-200 mb-6 max-w-lg mx-auto text-sm text-slate-700 font-bold leading-relaxed">
+                    "Tahniah, penguasaan anda dalam konsep dan aplikasi Reka Bentuk Mekatronik sangat cemerlang!"
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-center gap-3">
+                    <button onclick="restartQuiz()" class="btn-friendly bg-blue-600 hover:bg-blue-700 text-white font-display font-bold text-lg px-8 py-3.5 rounded-2xl shadow-lg inline-flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>Cuba Lagi</span>
+                    </button>
+                    <button onclick="toggleLeaderboardModal(true)" class="btn-friendly bg-amber-400 hover:bg-amber-500 text-slate-900 font-display text-lg px-6 py-3.5 rounded-2xl shadow-lg border-2 border-amber-200 inline-flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-list-ol"></i>
+                        <span>Papan Ranking</span>
+                    </button>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Leaderboard Modal -->
+    <div id="leaderboardModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl p-6 w-full max-w-lg shadow-2xl border-4 border-amber-400 relative max-h-[90vh] flex flex-col">
+            <button onclick="toggleLeaderboardModal(false)" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl w-9 h-9 flex items-center justify-center rounded-full bg-slate-100">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-4">
+                <div class="inline-block bg-amber-100 text-amber-600 p-3 rounded-full mb-1">
+                    <i class="fa-solid fa-trophy text-3xl"></i>
+                </div>
+                <h3 class="font-display text-2xl font-black text-slate-800">Papan Ranking Murid</h3>
+                <p class="text-xs font-bold text-slate-500">Kedudukan pencapaian terbaik Reka Bentuk Mekatronik T3</p>
+            </div>
+
+            <div id="leaderboardList" class="flex-grow overflow-y-auto space-y-2 pr-1 my-2"></div>
+
+            <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center text-xs">
+                <button onclick="clearLeaderboard()" class="text-rose-500 hover:underline font-bold">Padam Rekod</button>
+                <button onclick="toggleLeaderboardModal(false)" class="bg-slate-800 text-white font-bold px-6 py-2 rounded-xl">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="w-full text-center py-4 text-xs font-bold text-slate-500 bg-white/80 border-t border-slate-200">
+        RBT Tingkatan 3 • Aplikasi & Analisis Reka Bentuk Mekatronik
+    </footer>
+
+    <!-- JavaScript Quiz Logic -->
+    <script>
+        function setSafeText(id, text) {
+            const el = document.getElementById(id);
+            if (el) el.innerText = text;
+        }
+
+        const rawQuestionsDatabase = [
+            {
+                id: 1,
+                subtopic: "Bahagian A: Soalan 1-10",
+                question: "1. Sebuah lengan robotik menerima arahan komputer, tetapi pencengkamnya tidak dapat bergerak walaupun motor berfungsi. Apakah elemen yang paling wajar diperiksa?",
+                correctText: "B. Sistem mekanikal",
+                wrongTexts: [
+                    "A. Sistem bekalan elektrik",
+                    "C. Sistem pengaturcaraan",
+                    "D. Sistem komunikasi tanpa wayar"
+                ],
+                explanation: "Sistem mekanikal bertanggungjawab memindahkan pergerakan fizikal dari motor ke pencengkam. Memandangkan motor berfungsi dan arahan diterima, kegagalan mekanikal seperti pautan atau gear longgar/rosak merupakan jawapan B."
+            },
+            {
+                id: 2,
+                subtopic: "Bahagian A: Soalan 1-10",
+                question: "2. Antara situasi berikut, yang manakah paling tepat menggambarkan produk mekatronik yang berfungsi secara automatik?",
+                correctText: "D. Peranti mengesan perubahan persekitaran dan bertindak berdasarkan arahan kawalan",
+                wrongTexts: [
+                    "A. Mesin hanya bergerak apabila suis ditekan sepanjang operasi",
+                    "B. Peranti memerlukan pengguna menggerakkan komponen secara manual",
+                    "C. Mesin menggunakan motor tetapi tiada sistem kawalan"
+                ],
+                explanation: "Ciri utama produk mekatronik automatik ialah keupayaan penderia mengesan perubahan persekitaran dan pemproses memberikan tindakan susulan melalui sistem kawalan tanpa campur tangan manual pengguna (Jawapan D)."
+            },
+            {
+                id: 3,
+                subtopic: "Bahagian A: Soalan 1-10",
+                question: "3. Dalam sistem kipas siling solar, apakah kesan jika pengawal pengecas solar gagal mengawal pengecasan bateri?",
+                correctText: "A. Bateri berisiko mengalami pengecasan tidak terkawal",
+                wrongTexts: [
+                    "B. Kipas menghasilkan lebih banyak tenaga solar",
+                    "C. Motor bertukar menjadi penjana elektrik",
+                    "D. Panel solar berhenti menerima cahaya matahari"
+                ],
+                explanation: "Pengawal pengecas solar mengawal aliran arus elektrik dari panel solar ke bateri. Tanpanya, bateri berisiko mengalami lebihan cas (overcharging) yang merosakkan bateri (Jawapan A)."
+            },
+            {
+                id: 4,
+                subtopic: "Bahagian A: Soalan 1-10",
+                question: "4. Sebuah robot pengangkut menggunakan gear dengan nisbah pengurangan yang lebih tinggi. Apakah kesan lazim terhadap pergerakan output?",
+                correctText: "C. Kelajuan menurun tetapi daya kilas meningkat",
+                wrongTexts: [
+                    "A. Kelajuan dan daya kilas kedua-duanya meningkat tanpa had",
+                    "B. Kelajuan meningkat tetapi daya kilas menurun",
+                    "D. Motor tidak lagi memerlukan bekalan elektrik"
+                ],
+                explanation: "Nisbah pengurangan gear yang tinggi menukarkan kelajuan putaran tinggi dari motor kepada daya kilas (torque) yang lebih besar untuk mengangkat beban, pada masa yang sama menurunkan kelajuan output (Jawapan C)."
+            },
+            {
+                id: 5,
+                subtopic: "Bahagian A: Soalan 1-10",
+                question: "5. Mengapakah sebuah papan litar yang mempunyai perintang, kapasitor dan transistor tidak semestinya dianggap sebagai produk mekatronik lengkap?",
+                correctText: "B. Papan litar tersebut mungkin belum digabungkan dengan sistem mekanikal serta kawalan yang diperlukan",
+                wrongTexts: [
+                    "A. Komponen tersebut tidak menggunakan tenaga elektrik",
+                    "C. Komponen elektronik hanya boleh digunakan pada komputer",
+                    "D. Semua produk mekatronik mesti menggunakan panel solar"
+                ],
+                explanation: "Sistem mekatronik merupakan penggabungan 4 elemen utama: mekanikal, elektrik, elektronik, dan kawalan/pengaturcaraan. Papan litar berasingan hanya mewakili elemen elektronik (Jawapan B)."
+            },
+            {
+                id: 6,
+                subtopic: "Bahagian A: Soalan 1-10",
+                question: "6. Sebuah palang parkir diprogramkan supaya terbuka hanya apabila bayaran telah disahkan DAN kenderaan dikesan. Bayaran disahkan tetapi tiada kenderaan. Apakah tindakan yang betul?",
+                correctText: "D. Palang kekal tertutup",
+                wrongTexts: [
+                    "A. Palang terbuka selama lima saat",
+                    "B. Palang terbuka secara berulang",
+                    "C. Palang bergerak separuh sahaja"
+                ],
+                explanation: "Operasi logik DAN (AND) memerlukan KEDUA-DUA syarat dipenuhi. Kerana tiada kenderaan dikesan, palang kekal tertutup (Jawapan D)."
+            },
+            {
+                id: 7,
+                subtopic: "Bahagian A: Soalan 1-10",
+                question: "7. Sebuah kipas automatik diprogramkan untuk berputar apabila suhu melebihi 30°C. Suhu yang dikesan ialah 30°C. Apakah tindakan berdasarkan syarat tersebut?",
+                correctText: "A. Kipas tidak diaktifkan oleh syarat itu",
+                wrongTexts: [
+                    "B. Kipas terus berputar pada kelajuan maksimum",
+                    "C. Kipas sentiasa berputar perlahan",
+                    "D. Pengawal suhu berhenti berfungsi"
+                ],
+                explanation: "Syarat 'melebihi 30°C' (>30°C) bermakna kipas hanya diaktifkan jika suhu 30.1°C ke atas. Pada suhu tepat 30°C, syarat tidak dipenuhi (Jawapan A)."
+            },
+            {
+                id: 8,
+                subtopic: "Bahagian A: Soalan 1-10",
+                question: "8. Pintu automatik menutup selepas masa yang ditetapkan walaupun seseorang masih berada di laluan pintu. Apakah penambahbaikan paling berkesan?",
+                correctText: "C. Menggunakan penderia keselamatan bersama arahan kawalan untuk menghalang penutupan",
+                wrongTexts: [
+                    "A. Menggunakan motor yang lebih laju",
+                    "B. Menambahkan warna amaran pada pintu sahaja",
+                    "D. Mengurangkan masa pintu dibuka"
+                ],
+                explanation: "Menambah penderia halangan/keselamatan (seperti penderia inframerah) membolehkan pemproses mengesan kehadiran manusia di laluan dan membatalkan arahan penutupan (Jawapan C)."
+            },
+            {
+                id: 9,
+                subtopic: "Bahagian A: Soalan 1-10",
+                question: "9. Apakah fungsi utama sistem elektronik apabila penderia menghasilkan isyarat yang perlu diproses oleh mikropengawal?",
+                correctText: "B. Membentuk dan memproses isyarat elektrik supaya dapat digunakan oleh sistem kawalan",
+                wrongTexts: [
+                    "A. Menggantikan semua komponen mekanikal",
+                    "C. Menukarkan semua tenaga elektrik kepada tenaga haba",
+                    "D. Meningkatkan saiz fizikal produk"
+                ],
+                explanation: "Litar elektronik bertindak mengisih, menapis, dan menguatkan isyarat elektrik dari penderia agar boleh dibaca dengan tepat oleh mikropengawal (Jawapan B)."
+            },
+            {
+                id: 10,
+                subtopic: "Bahagian A: Soalan 1-10",
+                question: "10. Sebuah atur cara menggunakan arahan yang ditulis mengikut tatabahasa bahasa pengaturcaraan, tetapi menghasilkan pergerakan robot yang salah. Apakah masalah paling mungkin berlaku?",
+                correctText: "D. Kesalahan logik atau semantik arahan",
+                wrongTexts: [
+                    "A. Kesalahan sintaks semmata-mata",
+                    "B. Kerosakan bekalan elektrik secara automatik",
+                    "C. Kegagalan semua penderia serentak"
+                ],
+                explanation: "Apabila kod boleh dilaksana tanpa ralat sintaks tetapi output tidak seperti yang dijangkakan, ralat tersebut dinamakan ralat logik (Jawapan D)."
+            },
+            {
+                id: 11,
+                subtopic: "Bahagian B: Soalan 11-20",
+                question: "11. Sistem pintu pagar menerima arahan yang betul dan motor berpusing, tetapi pintu gagal bergerak kerana gear pemacu haus. Apakah kesimpulan paling tepat?",
+                correctText: "A. Kegagalan berlaku pada penghantaran gerakan mekanikal",
+                wrongTexts: [
+                    "B. Masalah utama ialah arahan pengaturcaraan",
+                    "C. Sistem kawalan tidak dapat menerima input",
+                    "D. Semua komponen elektronik perlu diganti"
+                ],
+                explanation: "Gear merupakan bahagian sistem mekanikal. Kehausan gear menyebabkan kegagalan pemindahan pergerakan putaran motor kepada pergerakan pintu (Jawapan A)."
+            },
+            {
+                id: 12,
+                subtopic: "Bahagian B: Soalan 11-20",
+                question: "12. Antara berikut, yang manakah paling jelas membezakan Revolusi Industri 4.0 daripada Revolusi Industri 3.0?",
+                correctText: "C. Integrasi mesin, data, rangkaian dan sistem pintar untuk operasi yang saling berhubung",
+                wrongTexts: [
+                    "A. Penggunaan tenaga wap dalam semua kilang",
+                    "B. Penghapusan sepenuhnya mesin automatik",
+                    "D. Penggunaan tenaga elektrik buat pertama kali"
+                ],
+                explanation: "Industri 3.0 menumpukan automasi komputer berasingan, manakala Industri 4.0 menghubungkan mesin, sistem fizikal-siber, IoT dan analisis data (Jawapan C)."
+            },
+            {
+                id: 13,
+                subtopic: "Bahagian B: Soalan 11-20",
+                question: "13. Sebuah mesin kilang menghantar bacaan suhu dan getaran ke pelayan melalui internet untuk pemantauan jarak jauh. Teknologi Revolusi Industri 4.0 yang paling langsung digunakan untuk sambungan tersebut ialah...",
+                correctText: "B. Internet benda (IoT)",
+                wrongTexts: [
+                    "A. Pembuatan bahan tambah",
+                    "C. Realiti terimbuh",
+                    "D. Simulasi mekanikal"
+                ],
+                explanation: "Internet of Things (IoT) membolehkan peranti fizikal dan penderia terhubung ke rangkaian internet untuk komunikasi data (Jawapan B)."
+            },
+            {
+                id: 14,
+                subtopic: "Bahagian B: Soalan 11-20",
+                question: "14. Sebuah kilang menganalisis berjuta-juta bacaan penderia untuk meramalkan kerosakan mesin. Apakah teras Revolusi Industri 4.0 yang paling berkaitan dengan analisis data tersebut?",
+                correctText: "D. Data raya",
+                wrongTexts: [
+                    "A. Robot berautonomi",
+                    "B. Pembuatan bahan tambah",
+                    "C. Realiti terimbuh"
+                ],
+                explanation: "Analisis set data yang sangat besar dan kompleks daripada pelbagai penderia merujuk kepada teras Data Raya (Big Data) - Jawapan D."
+            },
+            {
+                id: 15,
+                subtopic: "Bahagian B: Soalan 11-20",
+                question: "15. Mengapakah keselamatan siber penting apabila mesin mekatronik disambungkan ke rangkaian kilang?",
+                correctText: "A. Mengurangkan risiko akses tanpa kebenaran dan gangguan kawalan mesin",
+                wrongTexts: [
+                    "B. Menambahkan kelajuan putaran motor secara fizikal",
+                    "C. Menggantikan semua penderia dengan suis manual",
+                    "D. Menghasilkan bekalan kuasa apabila elektrik terputus"
+                ],
+                explanation: "Keselamatan siber melindungi peranti dan rangkaian daripada digodam atau diganggu oleh pihak tidak berkuasa (Jawapan A)."
+            },
+            {
+                id: 16,
+                subtopic: "Bahagian B: Soalan 11-20",
+                question: "16. Sebuah kereta robot bergerak ke hadapan walaupun penderia halangan mengesan objek di hadapannya. Isyarat penderia telah diterima dengan betul. Apakah pemeriksaan paling relevan?",
+                correctText: "C. Syarat logik dan arahan kawalan motor dalam atur cara",
+                wrongTexts: [
+                    "A. Warna tayar dan saiz badan kereta",
+                    "B. Kedudukan pelekat pada kereta",
+                    "D. Jenis bahan hiasan pada kereta"
+                ],
+                explanation: "Apabila isyarat penderia telah sampai ke mikropengawal tetapi output tindakan salah, semakan mesti dibuat pada kod arahan/logik (Jawapan C)."
+            },
+            {
+                id: 17,
+                subtopic: "Bahagian B: Soalan 11-20",
+                question: "17. Apakah urutan yang paling tepat bagi operasi sistem palang automatik yang menggunakan penderia dan mikropengawal?",
+                correctText: "B. Penderia → mikropengawal → pemacu motor → motor → palang",
+                wrongTexts: [
+                    "A. Motor → penderia → palang → mikropengawal",
+                    "C. Palang → motor → penderia → mikropengawal",
+                    "D. Pemacu motor → palang → penderia → motor"
+                ],
+                explanation: "Aliran blok mekatronik yang betul: Penderia (Input) → Mikropengawal (Kawalan) → Pemacu Motor (Litar Elektronik) → Motor (Penggerak) → Palang (Output Mekanikal) - Jawapan B."
+            },
+            {
+                id: 18,
+                subtopic: "Bahagian B: Soalan 11-20",
+                question: "18. Dalam sistem kawalan gelung tertutup, mengapakah maklum balas penderia diperlukan?",
+                correctText: "D. Supaya output sebenar dapat dibandingkan dengan keadaan yang dikehendaki",
+                wrongTexts: [
+                    "A. Supaya produk tidak perlu menggunakan tenaga elektrik",
+                    "B. Supaya semua arahan pengguna boleh diabaikan",
+                    "C. Supaya sistem bergerak tanpa sebarang had"
+                ],
+                explanation: "Sistem gelung tertutup menggunakan maklum balas penderia untuk menyelaraskan operasi output supaya sentiasa bertepatan dengan sasaran (Jawapan D)."
+            },
+            {
+                id: 19,
+                subtopic: "Bahagian B: Soalan 11-20",
+                question: "19. Sebuah robot bergerak menggunakan arahan pengaturcaraan yang telah ditetapkan tanpa mengambil kira sebarang perubahan persekitaran. Apakah kelemahan utama reka bentuk ini?",
+                correctText: "A. Robot kurang berupaya menyesuaikan tindakan terhadap keadaan yang berubah",
+                wrongTexts: [
+                    "B. Robot tidak boleh menggunakan motor elektrik",
+                    "C. Robot tidak boleh diprogramkan semula",
+                    "D. Robot tidak mempunyai sebarang komponen mekanikal"
+                ],
+                explanation: "Sistem gelung terbuka (tanpa maklum balas persekitaran) bersifat tegar dan tidak boleh menyesuaikan diri secara automatik apabila berlaku perubahan fizikal di persekitaran (Jawapan A)."
+            },
+            {
+                id: 20,
+                subtopic: "Bahagian B: Soalan 11-20",
+                question: "20. Seorang murid ingin mereka bentuk sistem pengasingan objek mengikut warna secara automatik. Gabungan komponen manakah paling sesuai?",
+                correctText: "C. Penderia warna, mikropengawal, motor penggerak dan bekalan elektrik",
+                wrongTexts: [
+                    "A. Bateri dan gear sahaja",
+                    "B. Motor dan suis manual sahaja",
+                    "D. Lampu LED, perintang dan pemegang plastik sahaja"
+                ],
+                explanation: "Sistem mekatronik lengkap untuk pengasingan memerlukan Input (penderia warna), Kawalan (mikropengawal), Output (motor penggerak), dan Kuasa (bekalan elektrik) - Jawapan C."
+            }
+        ];
+
+        let playerInfo = { name: "", class: "" };
+        let questionQueue = [];
+        let totalOriginalQuestions = 0;
+        let initialScore = 0;
+        let totalFirstAttempts = 0;
+        let wrongAttempts = 0;
+        let isBGMPlaying = false;
+        let canAnswer = true;
+
+        let boosterCounts = { c5050: 2, cHint: 2, cSkip: 1 };
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                try {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                } catch(e) {}
+            }
+        }
+
+        let bgmInterval = null;
+        function playBGMNotes() {
+            if (!isBGMPlaying || !audioCtx) return;
+            const notes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25];
+            const note = notes[Math.floor(Math.random() * notes.length)];
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(note, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 1.2);
+            } catch (e) {}
+        }
+
+        function toggleBGM() {
+            initAudio();
+            isBGMPlaying = !isBGMPlaying;
+            const statusText = document.getElementById('bgmStatus');
+            const icon = document.getElementById('bgmIcon');
+
+            if (isBGMPlaying) {
+                if (audioCtx && audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                if (statusText) statusText.innerText = "Muzik: ON";
+                if (icon) icon.className = "fa-solid fa-music text-amber-500 animate-bounce";
+                bgmInterval = setInterval(playBGMNotes, 500);
+            } else {
+                if (statusText) statusText.innerText = "Muzik: OFF";
+                if (icon) icon.className = "fa-solid fa-volume-xmark text-slate-400";
+                clearInterval(bgmInterval);
+            }
+        }
+
+        function playSFX(type) {
+            initAudio();
+            if (!audioCtx) return;
+
+            try {
+                if (type === 'correct') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.08);
+                    osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.16);
+                    gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.35);
+                } else if (type === 'wrong') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(175, audioCtx.currentTime + 0.12);
+                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.3);
+                } else if (type === 'booster') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.25);
+                }
+            } catch (e) {}
+        }
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function startQuiz() {
+            const nameInput = document.getElementById('playerName').value.trim();
+            const classInput = document.getElementById('playerClass').value.trim();
+
+            if (!nameInput || !classInput) {
+                alert("Sila isi Nama dan Kelas terlebih dahulu sebelum memulakan kuiz!");
+                return;
+            }
+
+            playerInfo.name = nameInput;
+            playerInfo.class = classInput;
+            setSafeText('displayPlayerInfo', `${playerInfo.name} (${playerInfo.class})`);
+
+            const filterValue = document.getElementById('subtopicFilter').value;
+            let filteredList = [];
+
+            if (filterValue === "ALL") {
+                filteredList = [...rawQuestionsDatabase];
+            } else {
+                filteredList = rawQuestionsDatabase.filter(q => q.subtopic === filterValue);
+            }
+
+            questionQueue = filteredList.map(item => {
+                const options = shuffle([item.correctText, ...item.wrongTexts]);
+                return {
+                    ...item,
+                    options: options,
+                    firstAttempt: true,
+                    isRetry: false
+                };
+            });
+
+            totalOriginalQuestions = questionQueue.length;
+            initialScore = 0;
+            totalFirstAttempts = 0;
+            wrongAttempts = 0;
+            boosterCounts = { c5050: 2, cHint: 2, cSkip: 1 };
+            updateBoosterUI();
+
+            setSafeText('liveScore', '0');
+
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('quizScreen').classList.remove('hidden');
+
+            renderCurrentQuestion();
+        }
+
+        function updateBoosterUI() {
+            setSafeText('count5050', boosterCounts.c5050);
+            setSafeText('countHint', boosterCounts.cHint);
+            setSafeText('countSkip', boosterCounts.cSkip);
+
+            document.getElementById('btn5050').disabled = boosterCounts.c5050 <= 0;
+            document.getElementById('btnHint').disabled = boosterCounts.cHint <= 0;
+            document.getElementById('btnSkip').disabled = boosterCounts.cSkip <= 0;
+        }
+
+        function renderCurrentQuestion() {
+            if (questionQueue.length === 0) {
+                finishQuiz();
+                return;
+            }
+
+            canAnswer = true;
+            const current = questionQueue[0];
+
+            setSafeText('subtopicBadge', current.subtopic);
+            setSafeText('questionText', current.question);
+            setSafeText('questionNum', totalOriginalQuestions - questionQueue.length + 1);
+
+            const remainingCount = questionQueue.length;
+            setSafeText('queueCountInfo', `Baki Soalan: ${remainingCount}`);
+
+            const progressPct = Math.round(((totalOriginalQuestions - remainingCount) / totalOriginalQuestions) * 100);
+            setSafeText('progressPercentText', `${progressPct}%`);
+            document.getElementById('progressBar').style.width = `${progressPct}%`;
+
+            document.getElementById('hintBanner').classList.add('hidden');
+            document.getElementById('feedbackBanner').classList.add('hidden');
+            document.getElementById('nextBtn').classList.add('hidden');
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            current.options.forEach((optText, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-2xl bg-white border-2 border-slate-200 hover:border-blue-400 hover:bg-blue-50/50 font-bold text-slate-800 text-sm sm:text-base transition-all btn-friendly flex items-center justify-between gap-3 shadow-sm";
+                btn.onclick = () => handleAnswer(optText, btn);
+                btn.setAttribute('data-option', optText);
+
+                btn.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="w-7 h-7 rounded-xl bg-slate-100 text-slate-600 border border-slate-200 text-xs flex items-center justify-center font-black">${String.fromCharCode(65 + idx)}</span>
+                        <span>${optText}</span>
+                    </div>
+                    <i class="fa-regular fa-circle text-slate-300 text-lg"></i>
+                `;
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(selectedText, selectedBtn) {
+            if (!canAnswer) return;
+            canAnswer = false;
+
+            const current = questionQueue[0];
+            const isCorrect = (selectedText === current.correctText);
+
+            const allButtons = document.querySelectorAll('#optionsContainer button');
+            allButtons.forEach(btn => btn.disabled = true);
+
+            const feedbackBanner = document.getElementById('feedbackBanner');
+            const feedbackIcon = document.getElementById('feedbackIcon');
+            const feedbackTitle = document.getElementById('feedbackTitle');
+            const feedbackText = document.getElementById('feedbackText');
+
+            if (isCorrect) {
+                playSFX('correct');
+                selectedBtn.className = "w-full text-left p-4 rounded-2xl bg-emerald-100 border-2 border-emerald-500 font-bold text-emerald-900 text-sm sm:text-base flex items-center justify-between gap-3 shadow";
+                selectedBtn.querySelector('i').className = "fa-solid fa-circle-check text-emerald-600 text-xl";
+
+                if (current.firstAttempt && !current.isRetry) {
+                    initialScore += 10;
+                    totalFirstAttempts++;
+                    setSafeText('liveScore', initialScore);
+                }
+
+                feedbackBanner.className = "p-4 rounded-2xl mb-4 text-sm font-bold bg-emerald-100 text-emerald-900 border-2 border-emerald-300 flex items-start gap-3 shadow-sm";
+                feedbackIcon.className = "fa-solid fa-circle-check text-emerald-600 text-2xl mt-0.5 shrink-0";
+                setSafeText('feedbackTitle', "Tahniah! Jawapan Tepat ✨");
+                setSafeText('feedbackText', current.explanation);
+
+                questionQueue.shift();
+
+            } else {
+                playSFX('wrong');
+                wrongAttempts++;
+                selectedBtn.className = "w-full text-left p-4 rounded-2xl bg-rose-100 border-2 border-rose-500 font-bold text-rose-900 text-sm sm:text-base flex items-center justify-between gap-3 shadow";
+                selectedBtn.querySelector('i').className = "fa-solid fa-circle-xmark text-rose-600 text-xl";
+
+                allButtons.forEach(btn => {
+                    if (btn.getAttribute('data-option') === current.correctText) {
+                        btn.className = "w-full text-left p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-400 font-bold text-emerald-800 text-sm sm:text-base flex items-center justify-between gap-3";
+                    }
+                });
+
+                feedbackBanner.className = "p-4 rounded-2xl mb-4 text-sm font-bold bg-rose-100 text-rose-900 border-2 border-rose-300 flex items-start gap-3 shadow-sm";
+                feedbackIcon.className = "fa-solid fa-triangle-exclamation text-rose-600 text-2xl mt-0.5 shrink-0";
+                setSafeText('feedbackTitle', "Kurang Tepat! Soalan Ini Akan Diulang 🔄");
+                setSafeText('feedbackText', current.explanation);
+
+                const failedQ = questionQueue.shift();
+                failedQ.firstAttempt = false;
+                failedQ.isRetry = true;
+                failedQ.options = shuffle([...failedQ.options]);
+                questionQueue.push(failedQ);
+            }
+
+            feedbackBanner.classList.remove('hidden');
+            document.getElementById('nextBtn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            renderCurrentQuestion();
+        }
+
+        function useBooster5050() {
+            if (boosterCounts.c5050 <= 0 || !canAnswer) return;
+            playSFX('booster');
+            boosterCounts.c5050--;
+            updateBoosterUI();
+
+            const current = questionQueue[0];
+            const allButtons = Array.from(document.querySelectorAll('#optionsContainer button'));
+
+            let wrongBtns = allButtons.filter(btn => btn.getAttribute('data-option') !== current.correctText);
+            wrongBtns = shuffle(wrongBtns);
+
+            const removeCount = Math.min(2, wrongBtns.length);
+            for (let i = 0; i < removeCount; i++) {
+                wrongBtns[i].style.opacity = '0.3';
+                wrongBtns[i].disabled = true;
+            }
+        }
+
+        function useBoosterHint() {
+            if (boosterCounts.cHint <= 0 || !canAnswer) return;
+            playSFX('booster');
+            boosterCounts.cHint--;
+            updateBoosterUI();
+
+            const current = questionQueue[0];
+            setSafeText('hintText', current.explanation);
+            document.getElementById('hintBanner').classList.remove('hidden');
+        }
+
+        function useBoosterSkip() {
+            if (boosterCounts.cSkip <= 0 || !canAnswer) return;
+            playSFX('booster');
+            boosterCounts.cSkip--;
+            updateBoosterUI();
+
+            const skippedQ = questionQueue.shift();
+            skippedQ.options = shuffle([...skippedQ.options]);
+            questionQueue.push(skippedQ);
+
+            renderCurrentQuestion();
+        }
+
+        function finishQuiz() {
+            document.getElementById('quizScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+
+            try {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            } catch(e) {}
+
+            const maxScore = totalOriginalQuestions * 10;
+            setSafeText('resPlayerName', playerInfo.name);
+            setSafeText('finalScore', `${initialScore} / ${maxScore}`);
+
+            const accuracy = Math.round((totalFirstAttempts / totalOriginalQuestions) * 100) || 0;
+            setSafeText('accuracyPercent', `${accuracy}%`);
+            setSafeText('wrongAttemptsCount', wrongAttempts);
+
+            let msg = "";
+            if (accuracy >= 80) {
+                msg = "Pencapaian Hebat! Anda mempunyai pemahaman yang sangat mendalam mengenai konsep dan analisis Mekatronik!";
+            } else if (accuracy >= 50) {
+                msg = "Usaha yang baik! Ulang kaji semula topik ini untuk memantapkan lagi konsep dan analisis mekatronik anda.";
+            } else {
+                msg = "Jangan putus asa! Teruskan latihan dan baca semula nota RBT Tingkatan 3 untuk kejayaan yang lebih baik.";
+            }
+            setSafeText('motivationMsg', msg);
+
+            saveToLeaderboard({
+                name: playerInfo.name,
+                class: playerInfo.class,
+                score: initialScore,
+                accuracy: accuracy,
+                date: new Date().toLocaleDateString('ms-MY')
+            });
+        }
+
+        function restartQuiz() {
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('startScreen').classList.remove('hidden');
+        }
+
+        function saveToLeaderboard(record) {
+            let leaderboard = JSON.parse(localStorage.getItem('rbt_mekatronik_t3_ranks') || '[]');
+            leaderboard.push(record);
+            leaderboard.sort((a, b) => b.score - a.score || b.accuracy - a.accuracy);
+            leaderboard = leaderboard.slice(0, 10);
+            localStorage.setItem('rbt_mekatronik_t3_ranks', JSON.stringify(leaderboard));
+        }
+
+        function toggleLeaderboardModal(show) {
+            const modal = document.getElementById('leaderboardModal');
+            if (show) {
+                renderLeaderboard();
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function renderLeaderboard() {
+            const listEl = document.getElementById('leaderboardList');
+            const leaderboard = JSON.parse(localStorage.getItem('rbt_mekatronik_t3_ranks') || '[]');
+
+            if (leaderboard.length === 0) {
+                listEl.innerHTML = `<p class="text-center text-slate-400 font-bold py-6 text-sm">Tiada rekod lagi. Jadilah yang pertama!</p>`;
+                return;
+            }
+
+            listEl.innerHTML = leaderboard.map((item, idx) => {
+                let badge = `<span class="font-black text-slate-500 w-6">${idx + 1}.</span>`;
+                if (idx === 0) badge = `<span class="text-amber-500 text-lg w-6"><i class="fa-solid fa-trophy"></i></span>`;
+                if (idx === 1) badge = `<span class="text-slate-400 text-lg w-6"><i class="fa-solid fa-medal"></i></span>`;
+                if (idx === 2) badge = `<span class="text-amber-700 text-lg w-6"><i class="fa-solid fa-award"></i></span>`;
+
+                return `
+                    <div class="flex items-center justify-between bg-slate-50 p-3 rounded-2xl border border-slate-200">
+                        <div class="flex items-center gap-2">
+                            ${badge}
+                            <div>
+                                <div class="font-black text-sm text-slate-800 leading-tight">${item.name}</div>
+                                <div class="text-xs text-slate-500 font-bold">${item.class} • ${item.date}</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-black text-blue-600 text-sm">${item.score} Mata</div>
+                            <div class="text-[10px] font-extrabold text-emerald-600">${item.accuracy}% Ketepatan</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function clearLeaderboard() {
+            if (confirm("Adakah anda pasti mahu memadam semua rekod carta organisasi/ranking?")) {
+                localStorage.removeItem('rbt_mekatronik_t3_ranks');
+                renderLeaderboard();
+            }
+        }
+    </script>
+</body>
+</html>
